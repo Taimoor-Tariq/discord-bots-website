@@ -1,0 +1,67 @@
+doctype html
+html
+    head
+        include _header
+        title Discord
+        style !{STYLE}
+
+    body
+        .server-list
+            .server-icon(style="margin-bottom: 0px; border-bottom: solid 1px #36393f;")
+                .icon.nologo(style="background-image: url(/site-images/icon.png); background-size: 60%;")
+
+            each g in GUILDS
+                .server-icon(onclick="location.href='/channels/"+g.id+"'")
+                    if g.icon
+                        .icon(style="background-image: url(https://cdn.discordapp.com/icons/"+g.id+"/"+g.icon+".png);")
+                    else
+                        .icon.nologo
+                            span= g.name[0]
+
+        .channel-list
+            - CHANNELS = CHANNELS.sort((a,b) => { return a.position - b.position })
+            .category
+                each c in CHANNELS
+                    if (c.type == 0 || c.type == 2) && !c.parent_id
+                        .channel
+                            .container
+                                .c-icon(onclick="location.href='/channels/"+GUILD+"/"+c.id+"'")
+                                    if c.type == 0
+                                        i.fas.fa-hashtag
+                                    if c.type == 2
+                                        i.fas.fa-volume-up
+                                .c-name(onclick="location.href='/channels/"+GUILD+"/"+c.id+"'")= c.name
+
+            each c in CHANNELS
+                if c.type == 4
+                    .category.minimised(onclick="toggleCat(this)")
+                        .title
+                            .container
+                                .c-icon
+                                    i.fas.fa-chevron-right
+                                .c-name= c.name
+
+                        each cc in CHANNELS
+                            if (cc.type == 0 || cc.type == 2) && cc.parent_id == c.id
+                                .channel
+                                    .container
+                                        .c-icon(onclick="location.href='/channels/"+GUILD+"/"+cc.id+"'")
+                                            if cc.type == 0
+                                                i.fas.fa-hashtag
+                                            if cc.type == 2
+                                                i.fas.fa-volume-up
+                                        .c-name(onclick="location.href='/channels/"+GUILD+"/"+cc.id+"'")= cc.name
+
+        script.
+            function toggleCat(cat) {
+                let open = cat.classList.contains("minimised")?false:true;
+
+                if (open) {
+                    cat.classList.add("minimised");
+                    cat.getElementsByClassName("title")[0].getElementsByClassName("container")[0].getElementsByClassName("c-icon")[0].style.transform = "rotate(0deg)";
+                }
+                else {
+                    cat.classList.remove("minimised");
+                    cat.getElementsByClassName("title")[0].getElementsByClassName("container")[0].getElementsByClassName("c-icon")[0].style.transform = "rotate(90deg)";
+                }
+            }

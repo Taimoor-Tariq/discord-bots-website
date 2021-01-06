@@ -1,0 +1,18 @@
+doctype html
+html
+    head
+        include _header
+        title Discord
+        style !{STYLE}
+
+    body(onload=HAS_OLD_URL[0]?"attachHASH()":"")
+        form(method="POST" action="login")
+            if HAS_OLD_URL[0]
+                div(style="display: none;")
+                    input#hashURL(type="text" name="oldURL" value=HAS_OLD_URL[1])
+
+            input(type="text", name="discordToken")
+            input(type="submit", value="START")
+
+        script.
+            function attachHASH() { document.forms[0]["oldURL"].value = `${document.forms[0]["oldURL"].value}${location.hash}` }

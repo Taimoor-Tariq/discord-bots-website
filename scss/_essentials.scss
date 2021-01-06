@@ -1,0 +1,23 @@
+@import url(https://use.fontawesome.com/releases/v5.0.6/css/all.css);
+@import url(https://fonts.googleapis.com/css?family=Saira);
+
+$bg-primary: #36393f;
+$bg-secondary: #2f3136;
+$bg-secondary-alt: #292b2f;
+$bg-tertiary: #202225;
+
+$txt-normal: #dcddde;
+$txt-muted: #72767d;
+
+$links: #8ea1e1;
+
+* {
+    scroll-behavior: smooth;
+    transition: 0.4s;
+}
+
+body {
+    font-family: Saira, sans-serif;
+    background-color: $bg-primary;
+    color: $txt-normal;
+}
